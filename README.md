@@ -4,4 +4,4 @@ run-game
 
 ⭐ 躲避所有敌人吧
 
-点击试玩：[roguelike](https://bluelanm.github.io/run-game/)
+点击试玩：[runGame](https://bluelanm.github.io/run-game/)
