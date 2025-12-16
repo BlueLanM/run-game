@@ -1,3 +1,4 @@
+/* eslint-disable */
 Game.Play = function(game) { };
 
 Game.Play.prototype = {
@@ -6,29 +7,29 @@ Game.Play.prototype = {
 		this.cursor = game.input.keyboard.createCursorKeys();
 
 		this.player = game.add.sprite(w / 2, h / 2, "player");
-		this.player.body.collideWorldBounds = true;
-		this.player.animations.add("bottom", [0, 1], 10, true);
-		this.player.animations.add("top", [4, 5], 10, true);
-		this.player.animations.add("right", [2, 3], 10, true);
-		this.player.animations.add("left", [6, 7], 10, true);
+	    this.player.body.collideWorldBounds = true;
+	    this.player.animations.add("bottom", [0, 1], 10, true);
+	    this.player.animations.add("top", [4, 5], 10, true);
+    	this.player.animations.add("right", [2, 3], 10, true);
+    	this.player.animations.add("left", [6, 7], 10, true);
 
 		this.enemies1 = game.add.group();
-		this.enemies1.createMultiple(30, "enemy1");
-		this.enemies1.setAll("outOfBoundsKill", true);
+	    this.enemies1.createMultiple(30, "enemy1");
+	    this.enemies1.setAll("outOfBoundsKill", true);
 
 		this.enemies2 = game.add.group();
-		this.enemies2.createMultiple(30, "enemy2");
-		this.enemies2.setAll("outOfBoundsKill", true);
+	    this.enemies2.createMultiple(30, "enemy2");
+	    this.enemies2.setAll("outOfBoundsKill", true);
 
-		this.labelScore = game.add.text(15, 10, "分数: 0", { fill: "#fff", font: "20px Arial" });
-		this.labelKeys = game.add.text(Math.floor(w / 2) + 1, h - 50, "使用方向键移动", { fill: "#fff", font: "20px Arial" });
-		this.labelKeys.anchor.setTo(0.5, 1);
+	    this.labelScore = game.add.text(15, 10, "score: 0", { fill: "#fff", font: "20px Arial" });
+	    this.labelKeys = game.add.text(Math.floor(w / 2) + 1, h - 50, "use the arrow keys to move", { fill: "#fff", font: "20px Arial" });
+	    this.labelKeys.anchor.setTo(0.5, 1);
 
-		this.hit_s = game.add.audio("hit");
-		this.enemyTime = 0;
-		this.scoreTime = 0;
-		this.score = 0;
-		this.firstKey = false;
+	    this.hit_s = game.add.audio("hit");
+	    this.enemyTime = 0;
+	    this.scoreTime = 0;
+	    this.score = 0;
+	    this.firstKey = false;
 	},
 
 	newEnemy: function() {
@@ -36,10 +37,10 @@ Game.Play.prototype = {
 
 		if (rand(2) == 1) { var enemy = this.enemies1.getFirstExists(false); } else { var enemy = this.enemies2.getFirstExists(false); }
 
-		enemy.anchor.setTo(0.5, 0.5);
-		const randu = rand(4);
+	    enemy.anchor.setTo(0.5, 0.5);
+	    var randu = rand(4);
 
-		if (randu == 0) {
+	    if (randu == 0) {
 			x = rand(w);
 			y = -enemy.height / 2 + 2;
 			tox = rand(w);
@@ -64,12 +65,13 @@ Game.Play.prototype = {
 		enemy.reset(x, y);
 		enemy.angle = 90 + Math.atan2(y - toy, x - tox) * 180 / Math.PI;
 
-		this.game.add.tween(enemy).to({ x: tox, y: toy }, 3000, Phaser.Easing.Linear.None).start();
-		enemy.animations.add("move");
-		enemy.animations.play("move", 5, true);
+	    this.game.add.tween(enemy).to({ x: tox, y: toy }, 3000, Phaser.Easing.Linear.None).start();
+	    enemy.animations.add("move");
+	    enemy.animations.play("move", 5, true);
 	},
 
 	playerHit: function(player, enemy) {
+		finalScore = this.score;
 		game.state.start("Over");
 	},
 
@@ -86,26 +88,26 @@ Game.Play.prototype = {
 			this.player.body.velocity.x = -300;
 			this.player.animations.play("left");
 		} else if (this.cursor.right.isDown) {
-			this.player.body.velocity.x = 300;
-			this.player.animations.play("right");
-		} else if (this.cursor.up.isDown) {
-			this.player.body.velocity.y = -300;
-			this.player.animations.play("top");
-		} else if (this.cursor.down.isDown) {
-			this.player.body.velocity.y = 300;
-			this.player.animations.play("bottom");
-		} else { this.player.animations.stop(); }
+	        this.player.body.velocity.x = 300;
+	        this.player.animations.play("right");
+	    } else if (this.cursor.up.isDown) {
+	        this.player.body.velocity.y = -300;
+	        this.player.animations.play("top");
+	    } else if (this.cursor.down.isDown) {
+	        this.player.body.velocity.y = 300;
+	        this.player.animations.play("bottom");
+	    } else { this.player.animations.stop(); }
 
-		if (this.game.time.now > this.enemyTime) { this.newEnemy(); }
+	    if (this.game.time.now > this.enemyTime) { this.newEnemy(); }
 
-		if (this.game.time.now > this.scoreTime) {
-			this.scoreTime = game.time.now + 1000;
-			this.score += 1;
-			this.labelScore.content = "分数: " + score;
-		}
+	    if (this.game.time.now > this.scoreTime) {
+	    	this.scoreTime = game.time.now + 1000;
+	    	this.score += 1;
+	    	this.labelScore.content = "score: " + this.score;
+	    }
 
-		game.physics.overlap(this.player, this.enemies1, this.playerHit, null, this);
-		game.physics.overlap(this.player, this.enemies2, this.playerHit, null, this);
+	    game.physics.overlap(this.player, this.enemies1, this.playerHit, null, this);
+	    game.physics.overlap(this.player, this.enemies2, this.playerHit, null, this);
 	}
 
 };

@@ -1,8 +1,9 @@
+/* eslint-disable */
 Game = {};
 
 const w = 350;
 const h = 350;
-const score = 0;
+let finalScore = 0;
 
 function rand(num) { return Math.floor(Math.random() * num); }
 

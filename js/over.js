@@ -1,8 +1,9 @@
+/* eslint-disable */
 Game.Over = function(game) { };
 
 Game.Over.prototype = {
 	create: function() {
-		label = game.add.text(w / 2, h / 2, "游戏结束\n\n分数: " + score + "\n\n按上方向键重试", { align: "center", fill: "#fff", font: "30px Arial" });
+		label = game.add.text(w / 2, h / 2, "游戏结束\n\n分数: " + finalScore + "\n\n按上方向键重试", { align: "center", fill: "#fff", font: "30px Arial" });
 		label.anchor.setTo(0.5, 0.5);
 
 		this.cursor = game.input.keyboard.createCursorKeys();
